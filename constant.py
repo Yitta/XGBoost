@@ -7,7 +7,9 @@
 
 # 变量声明
 # 数据集文件
-dataset_file = './sample data/modelling_dataset.csv'
+# dataset_file = './sample data/modelling_dataset.csv'
+dataset_file = './sample data/modelling_diff_dataset.csv'
+
 
 # label声明
 label = 'average_result_value'
