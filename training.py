@@ -27,11 +27,11 @@ print('================\n')
 # The params dictionary
 params = {
     # Best parameters from the result of modelling.
-    'max_depth': 9,
-    'min_child_weight': 3,
+    'max_depth': 1,
+    'min_child_weight': 2,
     'eta': 0.1,
     'subsample': 1,
-    'colsample_bytree': 0.9,
+    'colsample_bytree': 0.6,
     # Other parameters
     'objective':'reg:linear',
     'eval_metric': 'mae'

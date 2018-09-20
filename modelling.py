@@ -26,11 +26,11 @@ print('================\n')
 # The params dictionary
 params = {
     # Parameters that we are going to tune.
-    'max_depth': 9,
-    'min_child_weight': 3,
+    'max_depth': 1,
+    'min_child_weight': 2,
     'eta': 0.1,
     'subsample': 1,
-    'colsample_bytree': 0.9,
+    'colsample_bytree': 0.6,
     # Other parameters
     'objective':'reg:linear',
     'eval_metric': 'mae'
@@ -39,18 +39,18 @@ params = {
 num_boost_round=999
 
 # - 4.1 simple train with linear model
-model = xgb.train(
-    params,
-    dtrain,
-    num_boost_round=num_boost_round,
-    evals=[(dtest, "Test")],
-    early_stopping_rounds=10
-)
-
-print("Best MAE: {:.5f} with {} rounds".format(
-                 model.best_score,
-                 model.best_iteration+1))
-print('================\n')
+# model = xgb.train(
+#     params,
+#     dtrain,
+#     num_boost_round=num_boost_round,
+#     evals=[(dtest, "Test")],
+#     early_stopping_rounds=10
+# )
+#
+# print("Best MAE: {:.5f} with {} rounds".format(
+#                  model.best_score,
+#                  model.best_iteration+1))
+# print('================\n')
 
 #  - 4.2 xgb cross-validation
 # cv_results = xgb.cv(
@@ -74,8 +74,8 @@ print('================\n')
 #
 # gridsearch_params = [
 #     (max_depth, min_child_weight)
-#     for max_depth in range(9,10)
-#     for min_child_weight in range(1,4)
+#     for max_depth in range(1, 4)
+#     for min_child_weight in range(1, 3)
 # ]
 #
 # params['silent'] = 1
@@ -117,12 +117,12 @@ print('================\n')
 
 # - 4.4 Parameters subsample and colsample_bytree
 #   - subsample: 1
-#   - colsample_bytree: 0.9
-
+#   - colsample_bytree: 0.8
+#
 # gridsearch_params = [
 #     (subsample, colsample)
-#     for subsample in [i/10. for i in range(7,11)]
-#     for colsample in [i/10. for i in range(7,11)]
+#     for subsample in [i/10. for i in range(5,11)]
+#     for colsample in [i/10. for i in range(5,11)]
 # ]
 #
 # min_mae = float("Inf")
@@ -166,37 +166,37 @@ print('================\n')
 #   - ETA: 0.1 (0.034535 with 281 rounds)
 #   - ETA: 0.05 (0.034252 with 592 rounds)
 # This can take some time…
-# min_mae = float("Inf")
-# best_params = None
-# params['silent'] = 1
-#
-# for eta in [.3, .2, .1, .05, .01, .005]:
-#     print("CV with eta={}".format(eta))
-#
-#     # We update our parameters
-#     params['eta'] = eta
-#
-#     # Run and time CV
-#     cv_results = xgb.cv(
-#             params,
-#             dtrain,
-#             num_boost_round=num_boost_round,
-#             seed=42,
-#             nfold=5,
-#             metrics=['mae'],
-#             early_stopping_rounds=10
-#     )
-#
-#     # Update best score
-#     mean_mae = cv_results['test-mae-mean'].min()
-#     boost_rounds = cv_results['test-mae-mean'].argmin()
-#     print("\tMAE {} for {} rounds\n".format(mean_mae, boost_rounds))
-#     if mean_mae < min_mae:
-#         min_mae = mean_mae
-#         best_params = eta
-#
-# print("Best params: {}, MAE: {}".format(best_params, min_mae))
-# print('================\n')
+min_mae = float("Inf")
+best_params = None
+params['silent'] = 1
+
+for eta in [.3, .2, .1, .05, .01, .005]:
+    print("CV with eta={}".format(eta))
+
+    # We update our parameters
+    params['eta'] = eta
+
+    # Run and time CV
+    cv_results = xgb.cv(
+            params,
+            dtrain,
+            num_boost_round=num_boost_round,
+            seed=42,
+            nfold=5,
+            metrics=['mae'],
+            early_stopping_rounds=10
+    )
+
+    # Update best score
+    mean_mae = cv_results['test-mae-mean'].min()
+    boost_rounds = cv_results['test-mae-mean'].argmin()
+    print("\tMAE {} for {} rounds\n".format(mean_mae, boost_rounds))
+    if mean_mae < min_mae:
+        min_mae = mean_mae
+        best_params = eta
+
+print("Best params: {}, MAE: {}".format(best_params, min_mae))
+print('================\n')
 
 
 
