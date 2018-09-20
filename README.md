@@ -1,4 +1,12 @@
 # XGBoost
+
+### TODO List
+
+- [ ] add feature to training data: water level (R047)
+- [ ] label: use diff
+- [ ] train offline model in time order (data in 2 months for base model, and data in next month for time series training process)
+- [ ] evaluation: use result value in last time + diff (current label) as the result in current time and compute MAE
+
 ## Data Exploration
 ##### Graph:
 a: the time series data for Chlorines and flow
@@ -64,11 +72,3 @@ Content | File Name
 test_y_hat_file | test_y_hat.csv
 test_y_file | test_y.csv
 prediction_file | prediction_result.csv (['y_hat', 'y', 'diff'])
-
-
-## TODO List
-
-- [ ] add feature to training data: water level (R047)
-- [ ] label: use diff
-- [ ] train offline model in time order (data in 2 months for base model, and data in next month for time series training process)
-- [ ] evaluation: use result value in last time + diff (current label) as the result in current time and compute MAE
