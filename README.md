@@ -2,8 +2,10 @@
 
 ### TODO List
 
-- [ ] add feature to training data: water level (R047)
-- [ ] label: use diff
+25/09/2018
+
+- [x] add feature to training data: water level (R047)
+- [x] label: use diff
 - [ ] train offline model in time order (data in 2 months for base model, and data in next month for time series training process)
 - [ ] evaluation: use result value in last time + diff (current label) as the result in current time and compute MAE
 
@@ -25,10 +27,15 @@ output_2_days_water_inlet.csv | 2 periods of data | 03_2 _days _data
 
 File Name | Content | Source file
 :---: | :---: | :---:
-output_3_files.csv | pump open | 02_pre-processing
+output_3_files.csv | pump open data | 02_pre-processing
 output_all_data.csv | all data | 02_pre-processing
+output_open_4_data.csv | pump open with levels data| 02_pre-processing
+output_all_4_data.csv | all data with levels | 02_pre-processing
 modelling_dataset.csv | original label | 04_build_dataset
 modelling_diff_dataset.csv | diff label | 04_build_dataset
+modelling_only_open_diff_dataset_levels.csv | diff label only open data with levels | 06_build_dataset_with_4_files
+modelling_diff_dataset_levels.csv | diff label with levels and 2h close data | 06_build_dataset_with_4_files
+
 ## Modelling
 #### modelling.py
 - 4.1 simple train with linear model
